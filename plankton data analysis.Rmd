@@ -1,0 +1,470 @@
+---
+pdf_document: default
+author: "Felix Ehis Osawaru"
+date: "06/04/2022"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+title: "Data Vitualisation and Analysis"
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(ggplot2)
+```
+
+```{r}
+library(plyr)
+```
+
+```{r}
+library(dplyr)
+```
+
+```{r}
+library(lattice)
+```
+
+```{r}
+library(Rmisc)
+```
+
+```{r}
+plankton <- read.csv("plankton.csv", header=T, stringsAsFactors = T)
+```
+                                    QUESTION 1
+```{r}
+summary(plankton)
+```
+```{r}
+str(plankton)
+```
+```{r}
+class(plankton)
+```
+##Pseudonitzschia.A.Sp
+```{r}
+summary(plankton$Pseudonitzschia.A.Sp)
+```
+## Obtaining the statistical value for plankton and Pseudonitzschia.A.Sp
+```{r}
+mean(plankton$Pseudonitzschia.A.Sp)
+median(plankton$Pseudonitzschia.A.Sp)
+sd(plankton$Pseudonitzschia.A.Sp)
+max(plankton$Pseudonitzschia.A.Sp)
+IQR(plankton$Pseudonitzschia.A.Sp)
+range(plankton$Pseudonitzschia.A.Sp)
+var(plankton$Pseudonitzschia.A.Sp)
+```
+##Alexandrium.Sp
+```{r}
+summary(plankton$Alexandrium.Sp)
+```
+## Obtaining the statistical value for plankton and Alexandrium.Sp
+```{r}
+mean(plankton$Alexandrium.Sp)
+median(plankton$Alexandrium.Sp)
+sd(plankton$Alexandrium.Sp)
+min(plankton$Alexandrium.Sp)
+max(plankton$Alexandrium.Sp)
+IQR(plankton$Alexandrium.Sp)
+range(plankton$Alexandrium.Sp)
+var(plankton$Alexandrium.Sp)
+```
+## Robgordia.Sp
+```{r}
+summary(plankton$Robgordia.Sp)
+```
+## Obtaining the statistical value for plankton and Robgordia.Sp
+```{r}
+mean(plankton$Robgordia.Sp)
+median(plankton$Robgordia.Sp)
+sd(plankton$Robgordia.Sp)
+min(plankton$Robgordia.Sp)
+max(plankton$Robgordia.Sp)
+IQR(plankton$Robgordia.Sp)
+range(plankton$Robgordia.Sp)
+var(plankton$Robgordia.Sp)
+```
+
+## water.Temp
+```{r}
+summary(plankton$Water.Temp)
+```
+```{r}
+mean(plankton$Water.Temp)
+median(plankton$Water.Temp)
+sd(plankton$Water.Temp)
+min(plankton$Water.Temp)
+max(plankton$Water.Temp)
+IQR(plankton$Water.Temp)
+range(plankton$Water.Temp)
+var(plankton$Water.Temp)
+```
+## Region
+```{r}
+counts <- table(plankton$Region)
+counts
+```
+```{r}
+prop.table(counts)
+```
+##Species
+```{r}
+counts <- table(plankton$Species)
+counts
+```
+
+```{r}
+prop.table(counts)
+```
+## Year
+```{r}
+counts <- table(plankton$year)
+counts
+```
+
+```{r}
+prop.table(counts)
+```
+## Period
+```{r}
+counts <- table(plankton$period)
+counts
+```
+```{r}
+prop.table(counts)
+```
+                                 
+                                 QUESTION 2
+## Using Boxplot to show the distribution of Pseudonitzschia
+```{r}
+p <- ggplot(plankton, aes(y=Pseudonitzschia.A.Sp))
+p <- p + geom_boxplot(fill="lightblue",)
+p <- p + labs(x="Pseudonitzschia.A.Sp",
+         y="Count",
+         title = "Boxplot for Pseudonitzschia.A.Sp")+ 
+         theme(plot.title = element_text(hjust = 0.5))
+p
+```
+
+The distribution is positively skewed, the number of outliers is within the
+upper bound of the data, and the median does not divide the box evenly.
+That is, the mean, the standard deviation is higher than the median.
+
+## Water.Temp
+```{r}
+p <- ggplot(plankton, aes(y=Water.Temp))
+p <- p + geom_boxplot(fill="lightblue",)
+p <- p + labs(x="Water.Temp",
+         y="Count",
+         title = "Boxplot for Water.Temp")+
+         theme(plot.title = element_text(hjust = 0.5))
+p
+```
+
+The distribution is symmetric because the whiskers and outliers on the left are
+almost the same as on the right, and there is an equal amount of data in each 
+quadrant. 
+
+                                    QUESTION 3
+## Using Univeriate statistics to compare Pseudonitzchia data for 2021 and
+## before 2021 
+```{r}
+Pseudonitzchia.A.sp2021 <- plankton$Pseudonitzschia.A.Sp[plankton$year== 2021]
+summary(Pseudonitzchia.A.sp2021)
+```
+##Obtaining the statistical value for plankton$Pseudonitzschia.A.Sp for 2021
+```{r}
+sd(Pseudonitzchia.A.sp2021)
+range(Pseudonitzchia.A.sp2021)
+var(Pseudonitzchia.A.sp2021)
+IQR(Pseudonitzchia.A.sp2021)
+```
+
+## Pseudonitzchia distribution Before 2021 
+```{r}
+Pseudonitzchia.A.sp2021 <- plankton$Pseudonitzschia.A.Sp[plankton$year != 2021]
+summary(Pseudonitzchia.A.sp2021)
+```
+
+##Obtaining the statistical value for plankton$Pseudonitzschia.A.Sp before 2021
+```{r}
+sd(Pseudonitzchia.A.sp2021)
+range(Pseudonitzchia.A.sp2021)
+var(Pseudonitzchia.A.sp2021)
+IQR(Pseudonitzchia.A.sp2021)
+```
+
+Comparing the data from 2021 to those before 2021, it can be seen that the mean, 
+median, and standard deviation of 2021 are higher than the data of previous 
+years. It suggests that Pseudonitzschia.A.Sp species in 2021 are more dispersed
+than in previous years.
+
+                                  QUESTION 4
+## Plotting the Histogram of Normal and Skewed distribution
+```{r}
+p <- ggplot(data =plankton, aes(Water.Temp))
+p <- p + geom_histogram(colour="white", fill="lightblue", binwidth =2)
+p <- p + labs(x="Water.Temp",
+         y="Count",
+         title = "Histogram for Water.Temp")+
+         theme(plot.title = element_text(hjust = 0.5))
+p
+```
+
+This is a normal distribution because its bell curve has a peak, and the mean, 
+median, and mode are equal.l.
+
+```{r}
+p <- ggplot(data =plankton, aes(Pseudonitzschia.A.Sp))
+p <- p + geom_histogram( fill="lightblue",bins=20)
+p <- p + labs(x="Pseudonitzschia.A.Sp",
+         y="Count",
+         title = "Histogram for Pseudonitzschia.A.Sp")+ 
+         theme(plot.title = element_text(hjust = 0.5))
+p
+```
+
+Positively skewed distribution because the long tail moves to the right. 
+And the value is to the left of the mean. The mean is greater than the median. 
+The mean is close to the right side of the distribution and the median is close 
+to the left side of the distribution
+
+                                   QUESTION 5
+## Barplot to represent Data
+```{r}
+p <- ggplot(plankton, aes(Species, fill=Species)) 
+p <- p+ geom_bar(width = 1)
+p <- p+ geom_bar(position = "stack")
+p<- p+ labs(x="Species", 
+       title ="Bar plot for Species",)+
+       theme(plot.title = element_text(hjust = 0.5))
+p
+```
+
+From the Bar graph, we can say that the Common mussels have the highest count 
+in the species and the Razors with the lowest count.
+
+                                QUESTION 6
+## plotting the pie chart for water temperature 
+```{r}
+p <- ggplot(plankton, aes(x="", y= Water.Temp, fill = period))
+p <- p + geom_bar(width = 1, stat = "identity")
+p <- p + coord_polar ("y", start = 0)
+P <- p + theme_void()
+p <- p + labs(x="Water Temperature", title = "Pie chart showing water 
+              Temperature Distribution")
+p
+```
+The pie chart shows that the water temperature is lower in the first half of 
+the year and the highest in the second half of the year.
+
+                                QUESTIION 7
+##Plot showing values of Pseudonitzschia.A.Sp against values of Robgordia.S
+```{r}
+p <- ggplot(plankton, aes(Robgordia.Sp,Pseudonitzschia.A.Sp, colour=Species))
+p <- p + geom_point()
+p<- p+ labs(x="Robgordia.Sp", y="Pseudonitzschia.A.Sp", title ="Scatter plot of 
+            Robgordia.Sp against Pseudonitzschia.A.Sp",) +theme(plot.title =                               element_text(hjust = 0.5))
+p
+```
+
+The values of Pseudonitzschia and Robgordia have a negative correlation because
+the value species Common mussels and pacific oysters are very close to the 
+straight line. However, the three Common mussels points represent a negative 
+residual,  smaller than the predicted value.
+                                
+                                QUESTION 8
+## Plotting a graph for of Alexandrium.Sp in different regions by species
+```{r}
+p <- ggplot(plankton, aes(x = Region, y = Alexandrium.Sp, colour = Species))
+p <- p + geom_point(position = "jitter", pch = 16, size = 3 )
+p <- p + labs(y = "Alexandrium.Sp",
+title ="Scatter plot of Alexandrium.Sp in different regions")
+p
+```
+
+The plot above shows that there is a positive tendency among Alexandrium.Sp the
+species increase in different regions as Alexandrium.Sp value increases.
+Common mussels have an outlier furthest from the regression line, which is 3000.
+Adding jitter to the plot helps separate overlapping points to show the 
+descriptive relationship.
+
+                                    Question 9
+## Discovering a pair of plankton species which are correlated and a pair which 
+```{r}
+cov(plankton$Pseudonitzschia.A.Sp,plankton$Robgordia.Sp)
+cov(plankton$Pseudonitzschia.A.Sp,plankton$Alexandrium.Sp)
+cor(plankton$Pseudonitzschia.A.Sp,plankton$Robgordia.Sp)
+cor(plankton$Pseudonitzschia.A.Sp,plankton$Alexandrium.Sp)
+```
+
+From the observation, it can be assume that pairs (Pseudonitzschia. A.Sp, 
+Robgordia.Sp) has a strong correlation because their value is 0.975273 which is 
+close to 1. While the other pair (Pseudonitzschia.A.Sp, Alexandrium.Sp) value 
+is 0.06138349 which is not close to 1 and the covariance has a positive number 
+hence there is no correlation between these pairs of species
+                                  
+                                  
+                                  QUESTION 10
+## Line plot of tempreture against Sample
+```{r}
+plankton %>% filter(Species%in%c("Common cockles", "Pacific oysters")) %>%
+ggplot(aes(x=Sample, y=Water.Temp, colour = Species)) +
+geom_point() +
+geom_line() +
+labs(x = "Sample",
+y = "Water.Temp",
+title ="Line plot of water temperature against sample index")
+```
+                                 QUESTION 11
+##Producing a linear regression model of Pseudonitzschia.A.Sp on Robgordia.Sp 
+##forCommon mussels                                  
+```{r}
+ lm.output <- lm(formula = Pseudonitzschia.A.Sp ~ Robgordia.Sp, data = plankton)
+summary(lm.output)
+```
+
+The above statistics show that the R-squared value is 0.9511, which indicates 
+the value of Pseudonitzschia.A.Sp and Robgordia are highly correlated, which 
+shows a good model. The F-statistic value of 1.464e+04 is very significant for 
+the p-value < 2.2e-16
+ 
+## Estimating the value of Pseudonitzschia.A.Sp for the value (1000,2500,4000)
+```{r}
+newdata <- data.frame(Robgordia.Sp=c(1000,2500,4000))
+predict(lm.output,newdata)
+lmData <- 
+data.frame(residuals = lm.output$residuals, 
+                 Pseudonitzschia.A.Sp=plankton$Pseudonitzschia.A.Sp, 
+                 Robgordia.Sp= plankton$Robgordia.Sp)
+```
+## ploting a graph for residuals
+```{r}
+p <- ggplot(lmData, aes(x=Robgordia.Sp, y = residuals)) 
+p <- p + geom_point(size=3, colour="lightblue")
+p <- p +  theme_classic() 
+p <- p + theme(text = element_text(size = 20))
+p
+```
+## Using the spiro test to check the residual distribution is normal
+```{r}
+shapiro.test(lmData$residuals)
+```
+
+Using the Shapiro-Wilk normality test, the p-value is smaller than 0.05. 
+This value represents 0.000000000000000022, which is very close to zero. 
+Therefore, the residuals are not considered to be normally distributed. 
+
+```{r}
+p <- ggplot(plankton,aes(x = Pseudonitzschia.A.Sp, y= Robgordia.Sp))
+p <- p + geom_point() + stat_smooth() 
+p<- p+ labs(x="Pseudonitzschia.A.Sp", 
+       title ="Scaterplot for values of Pseudonitzschia.A.Sp& Robgordia.Sp ")+
+       theme(plot.title = element_text(hjust = 0.5))
+
+p
+```
+
+A linear regression model is significant because the residual scatterplots are 
+randomly distributed and the graph above shows a linearly increasing relationship
+between Pseudonitzschia.A.Sp and Robgordia.Sp. However, the P-value for the 
+Shapiro-Wilk normality test is less than 0.05, indicating that the null hypotheses
+is rejected, which is contradictory and that is my concern.  
+
+                                   QUESTION 12                                
+## Observing if the temperature of the mean is 12 degrees at 99 confidence.
+## firstly create a dataframe with columns mean of the temperature of water, 
+##month year period.
+##creating the dataframe meanWater
+```{r}
+newdata <- plankton[,c(5,10,11)]
+meanWaterTemp<-aggregate(newdata$Water.Temp, by=list(newdata$month, newdata$year), 
+FUN=mean, na.rm=TRUE)
+colnames(meanWaterTemp) <- c("month","year","meanwatertemp")
+View(meanWaterTemp)
+summary(meanWaterTemp)
+
+```
+
+```{r}
+CI(meanWaterTemp$meanwatertemp, ci=0.99)
+```
+
+At the 99% confidence interval, the mean water temperature is 12.13. So, we are 
+99% sure that the average temperature is 12 degrees. Without further testing,
+95% were confident that the average temperature was not 12.5 degrees.
+                                 
+                                 QUESTION 13
+
+```{r}
+plankton$year.period <- plankton$period
+plankton$year.period <- as.numeric(plankton$year.period)
+```
+
+```{r}
+p <- ggplot(plankton, aes(sample = Water.Temp))
+p <- p + stat_qq()
+p <- p + stat_qq_line()
+p
+```
+## Shapiro-walk normality test
+```{r}
+shapiro.test(plankton$Water.Temp)
+```
+
+It can be concluded that the dataset passes both tests. Firstly, in the QQ plot, 
+the points are closer to a straight line, and the Shapiro-Wilks test shows a 
+P-value greater than 0.05. This fact shows that the null hypothesis is true and
+the alternative hypothesis is false and there is a correlation between water 
+temperature and the time of year. So, the suspicion is justified.
+                               
+                                QUESTION 14
+## using ANOVA test to differentiate species formed in water temperature.
+
+The ANOVA test tells us whether there is a difference between the means. So, to
+check for the validity of the Anova test, you apply the Q-Q plot test and the 
+Shapiro-Wilk test. If the dot for the Q_Q plot is close to the line and the 
+p-value for the Shapiro-Wilk test is higher than 0.05, It is reasonable to 
+assume the distribution is normal. However, the ANOVA test's limitation is that
+it can only use to investigate a single variable. When distinguishing between 
+the means of three or additional categories, it can tell us if at least one pair
+of means is significantly different, but not which pair it is.
+                                      
+                                      QUESTION 15
+
+```{r}
+p <- ggplot(data =plankton, aes(month))
+p <- p + geom_histogram( fill="lightgreen",binwidth=1)
+p <- p + labs(x="month",
+             y="Count",
+             title = "Histogram for month")+ 
+             theme(plot.title = element_text(hjust = 0.5))
+p
+```
+
+```{r}
+p <- ggplot(plankton, aes(y=Region))
+p <- p + geom_boxplot(fill="lightgreen",)
+p <- p + labs(x="Region",
+         y="Count",
+         title = "Boxplot for Region")+
+         theme(plot.title = element_text(hjust = 0.5))
+p
+```
+
+From the above graph, we can observe that AGB is the area with the least counts
+and SIC is the area with the most counts. While for the other plot, the half of 
+the month has the highest count and decreases the count at the start and end of 
+the month. Comparing this plot, we can assume that the histogram is negatively 
+skewed and that the bar graph increase along each region. The count increases
+as data move from one region to another. Although there is an undercount in the
+data from one month to another
+
+
+
